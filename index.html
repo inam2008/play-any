@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Basic HTML Form</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            overflow: hidden;
+        }
+        .loader, .loader span {
+            width: 6cm;
+            height: 6cm;
+            border: 0.2cm solid white;
+            font-size: 10px;
+            border-radius: 1cm;
+            position: absolute;
+            mix-blend-mode: screen;
+        }
+        .loader {
+            background-color: gold;
+            animation: rotating 2s linear infinite;
+            display: none;
+        }
+        @keyframes rotating {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+        .loader span {
+            animation: de-rotating 4s linear infinite;
+        }
+        @keyframes de-rotating {
+            from, to {
+                transform: rotate(0deg) scale(0.5);
+            }
+            50% {
+                transform: rotate(-180deg) scale(1.2);
+            }
+        }
+        .loader span:nth-child(1) {
+            top: 3cm;
+            left: 3cm;
+            background-color: dodgerblue;
+        }
+        .loader span:nth-child(2) {
+            top: -3cm;
+            left: 3cm;
+            background-color: hotpink;
+        }
+        .loader span:nth-child(3) {
+            top: 3cm;
+            left: -3cm;
+            background-color: mediumpurple;
+        }
+        .loader span:nth-child(4) {
+            top: -3cm;
+            left: -3cm;
+            background-color: limegreen;
+        }
+
+        .form-container {
+            background-color: #f0f0f0;
+            padding: 100px;
+            border-radius: 10px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Register Now</h1>
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="form-container" id="formContainer">
+        <form method="post" id="frmSubmit">
+            <label for="name">Name:</label>
+            <input type="text" class="input" name="name" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" class="input" name="email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" class="input" name="password" required><br><br>
+
+            <input type="submit" id="btnSubmit">
+            <div id="msg"></div>
+        </form>
+    </div>
+    <script>
+        jQuery('#frmSubmit').on('submit', function(e) {
+            e.preventDefault();
+            jQuery('.loader').css('display', 'block');
+            jQuery('#formContainer').hide();
+            jQuery('#btnSubmit').attr('disabled', true);
+            jQuery.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbyARRFG0VOLEiidVdOL7B4EXX16XFH8HB7OHSHlPGUXb4TM3zjbYxhp6Hn7Id15keWF/exec',
+                type: 'post',
+                data: jQuery('#frmSubmit').serialize(),
+                success: function(result) {
+                    jQuery('#frmSubmit')[0].reset();
+                    jQuery('#msg').html('Thank You');
+                    setTimeout(function() {
+                        window.location.href = 'https://play-ani.tiiny.site/';
+                    }, 1000);
+                },
+                error: function(xhr, status, error) {
+                    jQuery('#msg').html('An error occurred: ' + error);
+                },
+                complete: function() {
+                    jQuery('.loader').css('display', 'none');
+                    jQuery('#formContainer').show();
+                    jQuery('#btnSubmit').attr('disabled', false);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
